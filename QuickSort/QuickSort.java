@@ -1,3 +1,11 @@
+/**
+ * Time Complexity:
+ *  - Average:  Θ(nlogn)
+ *  - Worst:    O(n^2)
+ * Space Complexity:
+ *  - Origin:   O(n)
+ *  - Opimized: O(logn)
+ */
 public class QuickSort {
   private static void swap(int[] ary, int i, int j) {
     int temp = ary[i];
@@ -30,12 +38,14 @@ public class QuickSort {
       return i;
   }
 
+  /**
+   * Space Complexity: O(n)
+   */
   private static void sorting(int[] ary, int low, int high) {
     if (low < high) {
       /**
        * Partition the values smaller and greater than pivot value (Use highest value)
        * After partition, we will get 2 non-sorted sequence that 1 is smaller and 1 is greater than pivot value.
-       * For example,
        */
       int node = partition(ary, low, high);
       /**
@@ -46,6 +56,29 @@ public class QuickSort {
        * Keep sorting large sequence
        */
       sorting(ary, node + 1, high);
+    }
+  }
+
+  /**
+   * Space Complexity: O(logn)
+   */
+  private static void sortingOptimized(int[] ary, int low, int high) {
+    while (low < high) {
+      /**
+       * Partition the values smaller and greater than pivot value (Use highest value)
+       * After partition, we will get 2 non-sorted sequence that 1 is smaller and 1 is greater than pivot value.
+       */
+      node = partition(ary, low, high);
+      /**
+       * Tail Call
+       */
+      if (node - low < high - node) {
+        sorting(ary, low, node - 1);
+        low = node + 1;
+      } else {
+        sorting(ary, node + 1, high);
+        high = node - 1;
+      }
     }
   }
 
